@@ -4045,6 +4045,22 @@ end)
         return FeatureList
     end
 
+    -- WindUI-style feature-list aliases.
+    -- 原有 FeatureList:Set / SetMode / Toggle API 保持不变。
+    function Window:Feature(name, config)
+        config = config or {}
+        return self:RegisterFeature(name, config)
+    end
+
+    function Window:AddFeature(name, config)
+        config = config or {}
+        return self:RegisterFeature(name, config)
+    end
+
+    function Window:RemoveFeature(name)
+        FeatureList:Set(name, false)
+    end
+
     function Window:GetPageController()
         return PageController
     end
@@ -4075,7 +4091,7 @@ end)
 end
 
 local SyntaxNextUI = {}
-SyntaxNextUI.Version = "1.0.3"
+SyntaxNextUI.Version = "1.0.4"
 
 -- WindUI-style API: both dot and colon invocation are supported.
 -- UI.CreateWindow(config)
