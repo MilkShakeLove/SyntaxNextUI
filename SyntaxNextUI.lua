@@ -1023,7 +1023,7 @@ function Window:Tab(config)
         -- 第一个 Tab 自动成为默认页面。
         -- 原版本虽然成功创建了 Tab 和全部组件，但 page 默认 Visible=false，
         -- 没有默认 SelectTab 时用户只能看到窗口外壳，看不到任何 Section/Toggle 等组件。
-        if PageController.SelectedTab == nil and Tab.Parent ~= nil then
+        if PageController.SelectedTab == nil and page.Parent ~= nil then
             PageController:SelectTab(registeredIndex, true)
         end
     end)
@@ -1556,10 +1556,6 @@ function Window:Tab(config)
     function Tab:Toggle(toggleConfig)
         toggleConfig = toggleConfig or {}
         local state = toggleConfig.Default == true
-
-        if AUTO_KEYBIND_TITLES[tostring(toggleConfig.Title or "")] then
-            toggleConfig.Keybind = toggleConfig.Keybind or {}
-        end
 
         local frame = Instance.new("Frame")
         frame.Name = "Toggle"
@@ -4079,7 +4075,7 @@ end)
 end
 
 local SyntaxNextUI = {}
-SyntaxNextUI.Version = "1.0.2"
+SyntaxNextUI.Version = "1.0.3"
 
 -- WindUI-style API: both dot and colon invocation are supported.
 -- UI.CreateWindow(config)
