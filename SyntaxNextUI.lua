@@ -1018,6 +1018,13 @@ function Window:Tab(config)
         if TabLayout and TabLayout.Parent and TabBar and TabBar.Parent then
             TabBar.CanvasSize = UDim2.fromOffset(0, math.max(TabLayout.AbsoluteContentSize.Y + 8, TabBar.AbsoluteSize.Y))
         end
+
+        -- 第一个 Tab 自动成为默认页面。
+        -- 原版本虽然成功创建了 Tab 和全部组件，但 page 默认 Visible=false，
+        -- 没有默认 SelectTab 时用户只能看到窗口外壳，看不到任何 Section/Toggle 等组件。
+        if PageController.SelectedTab == nil and Tab.Parent ~= nil then
+            PageController:SelectTab(registeredIndex, true)
+        end
     end)
 
     local function nextElementOrder()
@@ -4071,7 +4078,7 @@ end)
 end
 
 local SyntaxNextUI = {}
-SyntaxNextUI.Version = "1.0.1"
+SyntaxNextUI.Version = "1.0.2"
 
 -- WindUI-style API: both dot and colon invocation are supported.
 -- UI.CreateWindow(config)
