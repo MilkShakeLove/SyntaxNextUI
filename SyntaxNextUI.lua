@@ -1,4 +1,8 @@
--- SyntaxNext UI External Library\n-- Extracted from the stable SyntaxNext Native UI baseline.\n-- UI core only: no game-specific features.\n\n-- SECTION 11: NEXUS NATIVE UI (PRESERVED PREVIOUS UI)
+-- SyntaxNext UI External Library
+-- Extracted from the stable SyntaxNext Native UI baseline.
+-- UI core only: no game-specific features.
+
+-- SECTION 11: NEXUS NATIVE UI (PRESERVED PREVIOUS UI)
 local function CreateWindow(options)
     options = options or {}
     local ChatLogsFrame = nil
@@ -3991,9 +3995,20 @@ end)
     Window.FeatureList = FeatureList
     Window.PageController = PageController
 
-    -- WindUI-style public API: Window:Tab({...})
     function Window:CreateTab(config)
-        return self:Tab(config or {})
+        local tab = self:Tab(config or {})
+        -- Convenience aliases; the original names remain unchanged.
+        tab.AddSection = tab.Section
+        tab.AddParagraph = tab.Paragraph
+        tab.AddButton = tab.Button
+        tab.AddToggle = tab.Toggle
+        tab.AddKeybind = tab.Keybind
+        tab.AddSelector = tab.AnimatedSelector
+        tab.AddDropdown = tab.Dropdown
+        tab.AddInput = tab.Input
+        tab.AddSlider = tab.Slider
+        tab.AddCode = tab.Code
+        return tab
     end
 
     function Window:RegisterFeature(name, config)
@@ -4056,19 +4071,28 @@ end)
 end
 
 local SyntaxNextUI = {}
-SyntaxNextUI.__index = SyntaxNextUI
-SyntaxNextUI.Name = "SyntaxNextUI"
-SyntaxNextUI.Version = "1.1.0"
+SyntaxNextUI.Version = "1.0.1"
 
--- WindUI-compatible entry point:
--- local Window = SyntaxNextUI:CreateWindow({Title = "SyntaxNext"})
-function SyntaxNextUI:CreateWindow(config)
+-- WindUI-style API: both dot and colon invocation are supported.
+-- UI.CreateWindow(config)
+-- UI:CreateWindow(config)
+function SyntaxNextUI.CreateWindow(selfOrOptions, maybeOptions)
+    local options
+
+    if selfOrOptions == SyntaxNextUI then
+        options = maybeOptions
+    else
+        options = selfOrOptions
+    end
+
+    return CreateWindow(options or {})
+end
+
+function SyntaxNextUI:Create(config)
     return CreateWindow(config or {})
 end
 
--- Short alias
-function SyntaxNextUI:Create(config)
-    return self:CreateWindow(config or {})
-end
+SyntaxNextUI.New = SyntaxNextUI.CreateWindow
+SyntaxNextUI.createWindow = SyntaxNextUI.CreateWindow
 
 return SyntaxNextUI
