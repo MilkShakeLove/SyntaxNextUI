@@ -12175,7 +12175,8 @@ Size=UDim2.new(1,0,1,0),
 ThemeTag={
 ImageColor3="WindowSearchBarBackground",
 },
-ImageTransparency=0,
+-- Shadow-only XHanUI: no filled search-bar plate.
+ImageTransparency=1,
 },{
 ai.NewRoundFrame(ap.Radius,"Squircle",{
 Size=UDim2.new(1,0,1,0),
@@ -12902,14 +12903,42 @@ Size=UDim2.new(1,-aw.UIElements.SideBarContainer.AbsoluteSize.X,1,-aw.Topbar.Hei
 Position=UDim2.new(1,0,1,0),
 AnchorPoint=Vector2.new(1,1),
 BackgroundTransparency=1,
+ClipsDescendants=false,
 },{
+-- Main content is separated from the sidebar by shadow only.
+ao("ImageLabel",{
+Image="rbxassetid://8992230677",
+ImageColor3=Color3.fromRGB(0,0,0),
+ImageTransparency=0.62,
+BackgroundTransparency=1,
+AnchorPoint=Vector2.new(0.5,0.5),
+Position=UDim2.new(0.5,0,0.5,1),
+Size=UDim2.new(1,38,1,38),
+ScaleType=Enum.ScaleType.Slice,
+SliceCenter=Rect.new(99,99,99,99),
+ZIndex=1,
+Name="ContentShadowOuter",
+}),
+ao("ImageLabel",{
+Image="rbxassetid://8992230677",
+ImageColor3=Color3.fromRGB(0,0,0),
+ImageTransparency=0.40,
+BackgroundTransparency=1,
+AnchorPoint=Vector2.new(0.5,0.5),
+Position=UDim2.new(0.5,0,0.5,1),
+Size=UDim2.new(1,20,1,20),
+ScaleType=Enum.ScaleType.Slice,
+SliceCenter=Rect.new(99,99,99,99),
+ZIndex=2,
+Name="ContentShadowInner",
+}),
 an.NewRoundFrame(aw.UICorner-(aw.UIPadding/2),"Squircle",{
 Size=UDim2.new(1,0,1,0),
 ThemeTag={
 ImageColor3="PanelBackground",
 ImageTransparency="PanelBackgroundTransparency",
 },
-
+ImageTransparency=1,
 
 ZIndex=3,
 Name="Background",
@@ -12929,8 +12958,8 @@ ThemeTag={
 ImageColor3="WindowShadow",
 },
 ImageTransparency=1,
-Size=UDim2.new(1,148,1,148),
-Position=UDim2.new(0,-74,0,-74),
+Size=UDim2.new(1,160,1,160),
+Position=UDim2.new(0,-80,0,-80),
 ScaleType="Slice",
 SliceCenter=Rect.new(99,99,99,99),
 BackgroundTransparency=1,
@@ -12945,8 +12974,8 @@ ThemeTag={
 ImageColor3="WindowShadow",
 },
 ImageTransparency=1,
-Size=UDim2.new(1,86,1,86),
-Position=UDim2.new(0,-43,0,-43),
+Size=UDim2.new(1,96,1,96),
+Position=UDim2.new(0,-48,0,-48),
 ScaleType="Slice",
 SliceCenter=Rect.new(99,99,99,99),
 BackgroundTransparency=1,
@@ -14185,13 +14214,11 @@ end
 
 function aw.ToggleTransparency(C,F)
 
--- XHanUI shadow-shell behavior:
--- never restore the old opaque black main background.
+-- XHanUI shadow-only behavior:
+-- the main window never uses a background plate.
 aw.Transparent=true
 av.WindUI.Transparent=true
-
-local target=F==false and 0.88 or av.WindUI.TransparencyValue
-aw.UIElements.Main.Background.ImageTransparency=target
+aw.UIElements.Main.Background.ImageTransparency=1
 
 end
 
@@ -14889,7 +14916,7 @@ NotificationModule=a.load'f',
 Themes=nil,
 Transparent=true,
 
-TransparencyValue=0.94,
+TransparencyValue=1,
 
 UIScale=1,
 
@@ -15181,7 +15208,7 @@ aa.Themes=a.load'v'(aa,as)
 
 as.Themes=aa.Themes
 
--- XHanUI theme: shadow-defined translucent shell; no solid black main background.
+-- XHanUI theme: true shadow-only shell; main plates are fully transparent.
 do
 local base=aa.Themes.Dark
 local t={}
@@ -15199,18 +15226,18 @@ t.Button=Color3.fromHex"1D2631"
 t.Icon=Color3.fromHex"C2CBD6"
 t.Primary=Color3.fromHex"8FAEE8"
 
-t.PanelBackground=Color3.fromHex"F3F6FA"
-t.PanelBackgroundTransparency=0.94
+t.PanelBackground=Color3.fromHex"FFFFFF"
+t.PanelBackgroundTransparency=1
 
-t.WindowBackground=Color3.fromHex"F4F7FB"
+t.WindowBackground=Color3.fromHex"FFFFFF"
 t.WindowShadow=Color3.fromHex"000000"
 t.WindowSearchBarBackground=Color3.fromHex"202730"
 
 t.TabBackground=Color3.fromHex"0D1218"
 t.TabBackgroundHover=Color3.fromHex"18212C"
-t.TabBackgroundHoverTransparency=0.30
+t.TabBackgroundHoverTransparency=1
 t.TabBackgroundActive=Color3.fromHex"202B38"
-t.TabBackgroundActiveTransparency=0.12
+t.TabBackgroundActiveTransparency=1
 t.TabText=Color3.fromHex"C9D1DB"
 t.TabTextTransparency=0.18
 t.TabTextTransparencyActive=0
@@ -15240,8 +15267,8 @@ t.SectionBox=Color3.fromHex"252E39"
 t.SectionBoxTransparency=0.64
 t.SectionBoxBorder=Color3.fromHex"374250"
 t.SectionBoxBorderTransparency=0.50
-t.SectionBoxBackground=Color3.fromHex"F4F7FB"
-t.SectionBoxBackgroundTransparency=0.95
+t.SectionBoxBackground=Color3.fromHex"FFFFFF"
+t.SectionBoxBackgroundTransparency=1
 
 t.Notification=Color3.fromHex"090D12"
 t.Notification2=Color3.fromHex"151C25"
@@ -15256,9 +15283,9 @@ t.DropdownTabBackground=Color3.fromHex"111820"
 t.DropdownTabBorder=Color3.fromHex"303A47"
 
 t.LabelBackground=Color3.fromHex"151C25"
-t.LabelBackgroundTransparency=0.34
-t.ViewportBackground=Color3.fromHex"F4F7FB"
-t.ViewportBackgroundTransparency=0.95
+t.LabelBackgroundTransparency=1
+t.ViewportBackground=Color3.fromHex"FFFFFF"
+t.ViewportBackgroundTransparency=1
 
 aa.Themes.XHanUI=t
 aa.Themes.AltexSomnia=t -- compatibility alias
@@ -15412,7 +15439,7 @@ end
 
 aa.LibraryName="XHanUI"
 aa.ScriptName="Syntax"
-aa.Version="External-1.1-ShadowShell"
+aa.Version="External-1.2-ShadowOnly"
 
 local __XHanDynamicIslandSource=[==[
 return function(WindUI, Window, Options)
@@ -17271,8 +17298,10 @@ function aa.CreateWindow(selfOrConfig,maybeConfig)
     -- Shadow-shell mode: the main UI is defined by the outer shadow rather
     -- than by a solid black window background.
     cfg.Transparent=true
+    -- No main background board. Window shape is carried by shadows.
+    cfg.HidePanelBackground=false
     if cfg.ShadowTransparency==nil then
-        cfg.ShadowTransparency=0.24
+        cfg.ShadowTransparency=0.22
     end
 
     -- XHanUI does not use WindUI's floating OpenButton.
@@ -17295,9 +17324,9 @@ function aa.CreateWindow(selfOrConfig,maybeConfig)
     -- Keep XHanUI in shadow-shell mode.
     window.Transparent=true
     aa.Transparent=true
-    aa.TransparencyValue=0.94
+    aa.TransparencyValue=1
     pcall(function()
-        window.UIElements.Main.Background.ImageTransparency=0.94
+        window.UIElements.Main.Background.ImageTransparency=1
     end)
 
     -- Permanently suppress WindUI's old floating reopen button.
