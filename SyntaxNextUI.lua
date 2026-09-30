@@ -12175,8 +12175,7 @@ Size=UDim2.new(1,0,1,0),
 ThemeTag={
 ImageColor3="WindowSearchBarBackground",
 },
--- Shadow-only XHanUI: no filled search-bar plate.
-ImageTransparency=1,
+ImageTransparency=0,
 },{
 ai.NewRoundFrame(ap.Radius,"Squircle",{
 Size=UDim2.new(1,0,1,0),
@@ -12903,42 +12902,14 @@ Size=UDim2.new(1,-aw.UIElements.SideBarContainer.AbsoluteSize.X,1,-aw.Topbar.Hei
 Position=UDim2.new(1,0,1,0),
 AnchorPoint=Vector2.new(1,1),
 BackgroundTransparency=1,
-ClipsDescendants=false,
 },{
--- Main content is separated from the sidebar by shadow only.
-ao("ImageLabel",{
-Image="rbxassetid://8992230677",
-ImageColor3=Color3.fromRGB(0,0,0),
-ImageTransparency=0.62,
-BackgroundTransparency=1,
-AnchorPoint=Vector2.new(0.5,0.5),
-Position=UDim2.new(0.5,0,0.5,1),
-Size=UDim2.new(1,38,1,38),
-ScaleType=Enum.ScaleType.Slice,
-SliceCenter=Rect.new(99,99,99,99),
-ZIndex=1,
-Name="ContentShadowOuter",
-}),
-ao("ImageLabel",{
-Image="rbxassetid://8992230677",
-ImageColor3=Color3.fromRGB(0,0,0),
-ImageTransparency=0.40,
-BackgroundTransparency=1,
-AnchorPoint=Vector2.new(0.5,0.5),
-Position=UDim2.new(0.5,0,0.5,1),
-Size=UDim2.new(1,20,1,20),
-ScaleType=Enum.ScaleType.Slice,
-SliceCenter=Rect.new(99,99,99,99),
-ZIndex=2,
-Name="ContentShadowInner",
-}),
 an.NewRoundFrame(aw.UICorner-(aw.UIPadding/2),"Squircle",{
 Size=UDim2.new(1,0,1,0),
 ThemeTag={
 ImageColor3="PanelBackground",
 ImageTransparency="PanelBackgroundTransparency",
 },
-ImageTransparency=1,
+
 
 ZIndex=3,
 Name="Background",
@@ -12958,8 +12929,8 @@ ThemeTag={
 ImageColor3="WindowShadow",
 },
 ImageTransparency=1,
-Size=UDim2.new(1,160,1,160),
-Position=UDim2.new(0,-80,0,-80),
+Size=UDim2.new(1,128,1,128),
+Position=UDim2.new(0,-64,0,-64),
 ScaleType="Slice",
 SliceCenter=Rect.new(99,99,99,99),
 BackgroundTransparency=1,
@@ -12974,8 +12945,8 @@ ThemeTag={
 ImageColor3="WindowShadow",
 },
 ImageTransparency=1,
-Size=UDim2.new(1,96,1,96),
-Position=UDim2.new(0,-48,0,-48),
+Size=UDim2.new(1,72,1,72),
+Position=UDim2.new(0,-36,0,-36),
 ScaleType="Slice",
 SliceCenter=Rect.new(99,99,99,99),
 BackgroundTransparency=1,
@@ -14214,11 +14185,14 @@ end
 
 function aw.ToggleTransparency(C,F)
 
--- XHanUI shadow-only behavior:
--- the main window never uses a background plate.
-aw.Transparent=true
-av.WindUI.Transparent=true
-aw.UIElements.Main.Background.ImageTransparency=1
+-- XHanUI shadow-board mode is intentionally opaque.
+aw.Transparent=false
+av.WindUI.Transparent=false
+
+if aw.UIElements.Main and aw.UIElements.Main.Background then
+aw.UIElements.Main.Background.ImageTransparency=0
+end
+
 
 end
 
@@ -14916,7 +14890,7 @@ NotificationModule=a.load'f',
 Themes=nil,
 Transparent=true,
 
-TransparencyValue=1,
+TransparencyValue=0.15,
 
 UIScale=1,
 
@@ -15208,13 +15182,13 @@ aa.Themes=a.load'v'(aa,as)
 
 as.Themes=aa.Themes
 
--- XHanUI theme: true shadow-only shell; main plates are fully transparent.
+-- XHanUI theme: opaque shadow-image background boards; no black main shell.
 do
 local base=aa.Themes.Dark
 local t={}
 for k,v in pairs(base)do t[k]=v end
 
-t.Name="XHanUI"
+t.Name="AltexSomnia"
 
 t.Accent=Color3.fromHex"0A0D12"
 t.Dialog=Color3.fromHex"10151C"
@@ -15227,17 +15201,17 @@ t.Icon=Color3.fromHex"C2CBD6"
 t.Primary=Color3.fromHex"8FAEE8"
 
 t.PanelBackground=Color3.fromHex"FFFFFF"
-t.PanelBackgroundTransparency=1
+t.PanelBackgroundTransparency=0
 
 t.WindowBackground=Color3.fromHex"FFFFFF"
 t.WindowShadow=Color3.fromHex"000000"
-t.WindowSearchBarBackground=Color3.fromHex"202730"
+t.WindowSearchBarBackground=Color3.fromHex"0D1218"
 
 t.TabBackground=Color3.fromHex"0D1218"
 t.TabBackgroundHover=Color3.fromHex"18212C"
-t.TabBackgroundHoverTransparency=1
+t.TabBackgroundHoverTransparency=0.30
 t.TabBackgroundActive=Color3.fromHex"202B38"
-t.TabBackgroundActiveTransparency=1
+t.TabBackgroundActiveTransparency=0.12
 t.TabText=Color3.fromHex"C9D1DB"
 t.TabTextTransparency=0.18
 t.TabTextTransparencyActive=0
@@ -15267,8 +15241,8 @@ t.SectionBox=Color3.fromHex"252E39"
 t.SectionBoxTransparency=0.64
 t.SectionBoxBorder=Color3.fromHex"374250"
 t.SectionBoxBorderTransparency=0.50
-t.SectionBoxBackground=Color3.fromHex"FFFFFF"
-t.SectionBoxBackgroundTransparency=1
+t.SectionBoxBackground=Color3.fromHex"151A21"
+t.SectionBoxBackgroundTransparency=0.10
 
 t.Notification=Color3.fromHex"090D12"
 t.Notification2=Color3.fromHex"151C25"
@@ -15283,9 +15257,9 @@ t.DropdownTabBackground=Color3.fromHex"111820"
 t.DropdownTabBorder=Color3.fromHex"303A47"
 
 t.LabelBackground=Color3.fromHex"151C25"
-t.LabelBackgroundTransparency=1
-t.ViewportBackground=Color3.fromHex"FFFFFF"
-t.ViewportBackgroundTransparency=1
+t.LabelBackgroundTransparency=0.34
+t.ViewportBackground=Color3.fromHex"151A21"
+t.ViewportBackgroundTransparency=0.10
 
 aa.Themes.XHanUI=t
 aa.Themes.AltexSomnia=t -- compatibility alias
@@ -15439,7 +15413,7 @@ end
 
 aa.LibraryName="XHanUI"
 aa.ScriptName="Syntax"
-aa.Version="External-1.2-ShadowOnly"
+aa.Version="External-1.2-ShadowBoard"
 
 local __XHanDynamicIslandSource=[==[
 return function(WindUI, Window, Options)
@@ -17295,13 +17269,12 @@ function aa.CreateWindow(selfOrConfig,maybeConfig)
     cfg.Author=cfg.Author or "Syntax"
     cfg.Theme=cfg.Theme or "XHanUI"
 
-    -- Shadow-shell mode: the main UI is defined by the outer shadow rather
-    -- than by a solid black window background.
-    cfg.Transparent=true
-    -- No main background board. Window shape is carried by shadows.
+    -- Shadow-board mode is owned by the UI library itself.
+    -- The caller does not need to force transparency/theme state.
+    cfg.Transparent=false
     cfg.HidePanelBackground=false
     if cfg.ShadowTransparency==nil then
-        cfg.ShadowTransparency=0.22
+        cfg.ShadowTransparency=0.28
     end
 
     -- XHanUI does not use WindUI's floating OpenButton.
@@ -17321,12 +17294,78 @@ function aa.CreateWindow(selfOrConfig,maybeConfig)
         return nil
     end
 
-    -- Keep XHanUI in shadow-shell mode.
-    window.Transparent=true
-    aa.Transparent=true
-    aa.TransparencyValue=1
+    -- ============================================================
+    -- Opaque shadow background boards
+    -- Main shell  : shadow_15x / 103128722712751
+    -- Content pane: shadow_4x  / 113849097043339
+    -- ============================================================
+    local function __XHanApplyShadowBoard(imageObject, assetId, inset)
+        if not imageObject then return end
+
+        pcall(function()
+            imageObject.Image="rbxassetid://"..tostring(assetId)
+            imageObject.ImageColor3=Color3.fromRGB(255,255,255)
+            imageObject.ImageTransparency=0
+            imageObject.BackgroundTransparency=1
+            imageObject.ScaleType=Enum.ScaleType.Stretch
+
+            if inset and inset>0 then
+                imageObject.Size=UDim2.new(1,inset*2,1,inset*2)
+                imageObject.Position=UDim2.new(0,-inset,0,-inset)
+            else
+                imageObject.Size=UDim2.new(1,0,1,0)
+                imageObject.Position=UDim2.new(0.5,0,0.5,0)
+                imageObject.AnchorPoint=Vector2.new(0.5,0.5)
+            end
+        end)
+
+        task.spawn(function()
+            local ContentProvider=(cloneref or clonereference or function(x)return x end)(
+                game:GetService("ContentProvider")
+            )
+
+            pcall(function()
+                ContentProvider:PreloadAsync({imageObject})
+            end)
+
+            for _=1,90 do
+                if not imageObject or not imageObject.Parent then return end
+
+                local ok,size=pcall(function()
+                    return imageObject.ContentImageSize
+                end)
+
+                if ok and size and size.X>2 and size.Y>2 then
+                    local cx=math.floor(size.X/2)
+                    local cy=math.floor(size.Y/2)
+
+                    pcall(function()
+                        imageObject.SliceCenter=Rect.new(cx,cy,cx,cy)
+                        imageObject.SliceScale=1
+                        imageObject.ScaleType=Enum.ScaleType.Slice
+                        imageObject.ImageTransparency=0
+                    end)
+                    return
+                end
+
+                task.wait()
+            end
+        end)
+    end
+
     pcall(function()
-        window.UIElements.Main.Background.ImageTransparency=1
+        window.Transparent=false
+        aa.Transparent=false
+
+        local ui=window.UIElements
+        if ui and ui.Main and ui.Main.Background then
+            __XHanApplyShadowBoard(ui.Main.Background,103128722712751,0)
+        end
+
+        if ui and ui.MainBar and ui.MainBar.Background then
+            ui.MainBar.Background.Visible=true
+            __XHanApplyShadowBoard(ui.MainBar.Background,113849097043339,8)
+        end
     end)
 
     -- Permanently suppress WindUI's old floating reopen button.
